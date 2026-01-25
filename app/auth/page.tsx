@@ -19,6 +19,7 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false)
   const [showPass, setShowPass] = useState(false)
   const [showConfirmPass, setShowConfirmPass] = useState(false)
+  const { login } = useAuth()
 
   const router = useRouter()
 
@@ -71,14 +72,13 @@ export default function AuthPage() {
       }
 
       if (mode === "login") {
-        const { login } = useAuth()
         await login(data.token)
         router.replace("/movies")
       } else {
         setError("✅ Check your email to confirm your account.")
       }
-    } catch (err: any) {
-      setError(err?.message || "Network error.")
+    } catch {
+      setError("Network error.")
     } finally {
       setLoading(false)
     }
@@ -88,7 +88,7 @@ export default function AuthPage() {
     <div className="min-h-[100dvh] bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-950 dark:to-zinc-950">
       <div className="mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-4 py-10">
         <div className="grid w-full gap-8 lg:grid-cols-2 lg:gap-10">
-          
+
           {/* Left: Brand / marketing panel */}
           <div className="hidden lg:flex">
             <div className="relative w-full overflow-hidden rounded-3xl border border-zinc-200 bg-white p-10 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
