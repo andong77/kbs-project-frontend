@@ -1,9 +1,5 @@
 import "./globals.css"
-
-export const metadata = {
-  title: "KBS",
-  description: "Knowledge Based System – Movies",
-}
+import { AuthProvider } from "@/context/AuthContext"
 
 export default function RootLayout({
   children,
@@ -11,8 +7,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html>
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   )
 }
