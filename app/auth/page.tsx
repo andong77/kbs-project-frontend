@@ -140,11 +140,6 @@ export default function AuthPage() {
                     </div>
                   </div>
                 </div>
-
-                <div className="mt-10 text-xs text-zinc-500 dark:text-zinc-400">
-                  Tip: set <span className="font-mono">NEXT_PUBLIC_API_URL</span>{" "}
-                  in your env.
-                </div>
               </div>
             </div>
           </div>
