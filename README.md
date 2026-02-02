@@ -109,4 +109,4 @@ For Google sign-in to work in production, the backend must have `FRONTEND_URL` s
 
 ## Related
 
-- **Backend API** — [kbs-project-backend](https://github.com/your-org/kbs-project-backend): Express, Prisma, PostgreSQL, rule-based movie recommendations and auth.
+- **Backend API** — [kbs-project-backend](https://github.com/andong77/kbs-project-backend): Express, Prisma, PostgreSQL, rule-based movie recommendations and auth.
