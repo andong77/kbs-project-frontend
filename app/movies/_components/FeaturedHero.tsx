@@ -1,10 +1,12 @@
 import Image from "next/image"
+import Link from "next/link"
 import type { Movie } from "@/types/movie"
-import { BookmarkIcon, InfoIcon, PlayIcon, StarIcon } from "./icons"
+import { StarIcon } from "./icons"
 
 export function FeaturedHero({ movie }: { movie: Movie }) {
   return (
-    <section className="relative isolate min-h-[72vh] overflow-hidden bg-neutral-950 sm:min-h-[80vh]">
+    <section className="relative isolate min-h-[85vh] overflow-hidden bg-neutral-950 sm:min-h-[90vh]">
+      {/* Backdrop */}
       {movie.backdropUrl ? (
         <Image
           src={movie.backdropUrl}
@@ -12,70 +14,78 @@ export function FeaturedHero({ movie }: { movie: Movie }) {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 via-neutral-950 to-black">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.16),transparent_55%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_right,rgba(239,68,68,0.22),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_0%,rgba(255,255,255,0.12),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_80%_50%,rgba(239,68,68,0.15),transparent_50%)]" />
         </div>
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/35 to-black/0" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/0" />
+      {/* Overlays for readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-      <div className="relative mx-auto flex max-w-6xl px-4 pt-28 pb-10 sm:px-6 sm:pt-36 sm:pb-14">
-        <div className="max-w-xl">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-white/75">
-            <span className="inline-flex items-center gap-2">
-              <span className="text-red-500 font-extrabold tracking-wide">N</span>
-              <span className="uppercase tracking-[0.2em] text-white/70">
-                Series
+      {/* Content */}
+      <div className="relative mx-auto flex min-h-[85vh] max-w-7xl flex-col justify-end px-4 pb-16 pt-24 sm:min-h-[90vh] sm:px-6 sm:pb-20 sm:pt-28">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-10">
+          {/* Poster on larger screens */}
+          {movie.posterUrl && (
+            <div className="hidden w-44 shrink-0 overflow-hidden rounded-xl border-2 border-white/10 shadow-2xl sm:block sm:w-52 lg:w-60">
+              <Image
+                src={movie.posterUrl}
+                alt={`${movie.title} poster`}
+                width={240}
+                height={360}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
+
+          <div className="flex-1 space-y-4 sm:space-y-5">
+            {/* Badge + rating */}
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-full bg-red-600/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white">
+                Featured
               </span>
-            </span>
-            <span className="hidden text-white/50 sm:inline">•</span>
-            <span className="inline-flex items-center gap-1.5">
-              <StarIcon className="h-4 w-4 text-yellow-400" />
-              <span className="font-semibold text-white">{movie.rating}</span>
-              <span className="text-white/60">IMDb</span>
-            </span>
-          </div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
+                <StarIcon className="h-4 w-4 text-yellow-400" />
+                <span>{movie.rating.toFixed(1)}</span>
+              </span>
+              {movie.year && (
+                <span className="text-sm text-white/70">{movie.year}</span>
+              )}
+              {movie.genres?.length > 0 && (
+                <span className="text-sm text-white/60">
+                  {movie.genres.slice(0, 3).join(" · ")}
+                </span>
+              )}
+            </div>
 
-          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:mt-6 sm:text-6xl">
-            {movie.title}
-          </h1>
+            {/* Title */}
+            <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
+              {movie.title}
+            </h1>
 
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-white/70">
-            <span className="font-semibold text-white">#1</span>
-            <span className="text-white/70">in TV Shows Today</span>
-          </div>
+            {/* Overview */}
+            {movie.overview && (
+              <p className="max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg line-clamp-4">
+                {movie.overview}
+              </p>
+            )}
 
-          {movie.overview ? (
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/80 sm:mt-5 sm:text-base">
-              {movie.overview}
-            </p>
-          ) : null}
-
-          <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8">
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 rounded bg-white px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/30"
-            >
-              <PlayIcon className="h-5 w-5" />
-              Play
-            </button>
-
-            <button
-              type="button"
-              className="inline-flex items-center gap-2 rounded bg-white/20 px-5 py-2.5 text-sm font-semibold text-white ring-1 ring-white/10 backdrop-blur transition hover:bg-white/25 focus:outline-none focus:ring-2 focus:ring-white/30"
-            >
-              <InfoIcon className="h-5 w-5" />
-              More Info
-            </button>
-
-            <div className="hidden sm:flex items-center gap-2 text-white/60">
-              <BookmarkIcon className="h-5 w-5" />
-              <span className="text-sm">Add to My List</span>
+            {/* CTA */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <Link
+                href={`/movies/${movie.id}`}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black shadow-lg transition hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-950"
+              >
+                View details
+              </Link>
+              <span className="text-sm text-white/50">
+                Full info, cast & where to watch
+              </span>
             </div>
           </div>
         </div>
@@ -83,4 +93,3 @@ export function FeaturedHero({ movie }: { movie: Movie }) {
     </section>
   )
 }
-

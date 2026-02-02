@@ -1,5 +1,6 @@
 import "./globals.css"
 import { AuthProvider } from "@/context/AuthContext"
+import { AppShell } from "@/components/AppShell"
 
 export default function RootLayout({
   children,
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <AppShell>{children}</AppShell>
+        </AuthProvider>
       </body>
     </html>
   )

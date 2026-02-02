@@ -1,5 +1,4 @@
 import type { Movie } from "@/types/movie"
-import { ArrowRightIcon } from "./icons"
 import { HorizontalScroller } from "./HorizontalScroller"
 import { MovieCard } from "./MovieCard"
 
@@ -7,10 +6,16 @@ export function MovieRow({
   title,
   subtitle,
   movies,
+  error,
+  onRetry,
+  onCardEventToggled,
 }: {
   title: string
   subtitle?: string
   movies: Movie[]
+  error?: string | null
+  onRetry?: () => void
+  onCardEventToggled?: () => void
 }) {
   return (
     <section className="mt-6 sm:mt-8">
@@ -22,21 +27,26 @@ export function MovieRow({
           ) : null}
         </div>
 
-        <button
-          type="button"
-          className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-white/70 transition hover:text-white sm:inline-flex"
-        >
-          <span>See all</span>
-          <ArrowRightIcon className="h-4 w-4" />
-        </button>
+        {error && onRetry ? (
+          <button
+            type="button"
+            onClick={onRetry}
+            className="inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium text-red-400 transition hover:text-red-300"
+          >
+            Retry
+          </button>
+        ) : null}
       </div>
 
       <HorizontalScroller>
         {movies.map((m) => (
-          <MovieCard key={m.id} movie={m} />
+          <MovieCard
+            key={m.id}
+            movie={m}
+            onEventToggled={onCardEventToggled}
+          />
         ))}
       </HorizontalScroller>
     </section>
   )
 }
-

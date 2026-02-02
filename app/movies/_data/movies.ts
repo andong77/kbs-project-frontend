@@ -9,7 +9,8 @@ export const featuredMovie: Movie = {
   rating: 8.9,
   overview:
     "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival. An epic journey across time and space that challenges our understanding of reality.",
-  // Leave image URLs undefined for now to avoid dev-time upstream 404s.
+  posterUrl: null,
+  backdropUrl: null,
 }
 
 export const recommendedMovies: Movie[] = [
@@ -19,6 +20,8 @@ export const recommendedMovies: Movie[] = [
     year: 2024,
     rating: 8.5,
     genres: ["Action"],
+    posterUrl: null,
+    backdropUrl: null,
   },
   {
     id: "eternal-summer",
@@ -26,6 +29,8 @@ export const recommendedMovies: Movie[] = [
     year: 2023,
     rating: 7.8,
     genres: ["Romance"],
+    posterUrl: null,
+    backdropUrl: null,
   },
   {
     id: "the-silent-witness",
@@ -33,6 +38,8 @@ export const recommendedMovies: Movie[] = [
     year: 2024,
     rating: 9.1,
     genres: ["Thriller"],
+    posterUrl: null,
+    backdropUrl: null,
   },
   {
     id: "dreamworld-chronicles",
@@ -40,6 +47,8 @@ export const recommendedMovies: Movie[] = [
     year: 2024,
     rating: 8.3,
     genres: ["Fantasy"],
+    posterUrl: null,
+    backdropUrl: null,
   },
   {
     id: "laugh-out-loud",
@@ -47,6 +56,8 @@ export const recommendedMovies: Movie[] = [
     year: 2023,
     rating: 7.2,
     genres: ["Comedy"],
+    posterUrl: null,
+    backdropUrl: null,
   },
 ]
 

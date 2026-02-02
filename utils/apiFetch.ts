@@ -1,13 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { API_BASE } from "@/lib/constants"
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
-
-class UnauthorizedError extends Error {
+export class UnauthorizedError extends Error {
   constructor() {
     super("UNAUTHORIZED")
   }
 }
 
+/**
+ * JSON API request with optional auth. Use for all backend API calls.
+ * @param endpoint - Path after /api (e.g. "/auth/me", "/movies/new")
+ * @param method - HTTP method
+ * @param body - Optional JSON-serializable body (ignored for GET)
+ * @returns Parsed response body, or null for 204
+ */
 export async function apiFetch<T = any>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE" = "GET",
@@ -26,7 +31,7 @@ export async function apiFetch<T = any>(
     headers.Authorization = `Bearer ${token}`
   }
 
-  const res = await fetch(`${API_BASE}/api${endpoint}`, {
+  const res = await fetch(`${API_BASE || ""}/api${endpoint}`, {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
@@ -50,6 +55,13 @@ export async function apiFetch<T = any>(
   return res.json()
 }
 
+/**
+ * FormData API request with optional auth (e.g. file upload). No Content-Type header.
+ * @param endpoint - Path after /api
+ * @param method - POST, PUT, or PATCH
+ * @param formData - FormData to send as body
+ * @returns Parsed response body
+ */
 export async function apiFetchForm<T = any>(
   endpoint: string,
   method: "POST" | "PUT" | "PATCH",
@@ -66,7 +78,7 @@ export async function apiFetchForm<T = any>(
     headers.Authorization = `Bearer ${token}`
   }
 
-  const res = await fetch(`${API_BASE}/api${endpoint}`, {
+  const res = await fetch(`${API_BASE || ""}/api${endpoint}`, {
     method,
     headers,
     body: formData,
@@ -85,5 +97,3 @@ export async function apiFetchForm<T = any>(
 
   return res.json()
 }
-
-export { UnauthorizedError }

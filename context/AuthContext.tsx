@@ -1,5 +1,15 @@
 "use client"
 
+/**
+ * Auth context: current user, login/logout, and token-based session.
+ *
+ * - On mount, if a token exists in localStorage, fetches /auth/me and sets user/status.
+ * - login(token) stores the token, fetches /auth/me, and sets user/status.
+ * - logout() clears token and user, then redirects to /auth.
+ * - refreshUser() re-fetches /auth/me; on 401 calls logout().
+ *
+ * useAuth() must be used inside AuthProvider.
+ */
 import {
     createContext,
     useCallback,
@@ -9,17 +19,11 @@ import {
 } from "react"
 import { useRouter } from "next/navigation"
 import { apiFetch, UnauthorizedError } from "@/utils/apiFetch"
+import type { User } from "@/types/auth"
 
+export type AuthStatus = "loading" | "authenticated" | "guest"
 
-export type User = {
-    id: string
-    email: string
-    role?: string
-}
-
-type AuthStatus = "loading" | "authenticated" | "guest"
-
-type AuthContextType = {
+export type AuthContextType = {
     user: User | null
     status: AuthStatus
     login: (token: string) => Promise<User>
@@ -34,7 +38,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null)
     const [status, setStatus] = useState<AuthStatus>("loading")
 
-    // Bootstrap auth ONCE
     useEffect(() => {
         const token = localStorage.getItem("authToken")
 

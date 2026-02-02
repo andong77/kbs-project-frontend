@@ -18,7 +18,9 @@ export default function AuthCallbackClient() {
     }
 
     login(token)
-      .then(() => router.replace("/movies"))
+      .then((user) =>
+        router.replace(user?.onboardingCompleted ? "/" : "/onboarding")
+      )
       .catch(() => router.replace("/auth"))
   }, [params, login, router])
 

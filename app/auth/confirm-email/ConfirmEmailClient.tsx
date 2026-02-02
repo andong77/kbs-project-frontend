@@ -39,7 +39,7 @@ export default function ConfirmEmailClient() {
         const data = await res.json().catch(() => ({}))
         if (!res.ok) throw new Error(data?.message || "Confirmation failed")
         setStatus("success")
-        setMessage("✅ Email confirmed. You can login now.")
+        setMessage("Email confirmed. You can login now.")
       })
       .catch((err) => {
         setStatus("error")

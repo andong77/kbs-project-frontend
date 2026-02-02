@@ -1,5 +1,5 @@
-import MoviesPageClient from "./MoviesPageClient"
+import MoviesGridPageClient from "./MoviesGridPageClient"
 
 export default function MoviesPage() {
-  return <MoviesPageClient />
+  return <MoviesGridPageClient />
 }
